@@ -354,7 +354,7 @@ class Report:
         table_name_1 = 'Статистика по годам'
         table_name_2 = 'Статистика по городам'
 
-        image_url = 'C:\\Users\\elena\\PycharmProjects\\pythonProject13\\graph.png'
+        image_url = 'F:\\Users\\karina\\PycharmProjects\\ilkaeva\\graph.png'
 
         env = Environment(loader=FileSystemLoader('.'))
         template = env.get_template("index.html")
