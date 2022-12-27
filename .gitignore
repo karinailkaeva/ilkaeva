@@ -1,0 +1,7 @@
+venv/
+
+.idea/
+
+vacancies.csv
+
+vacancies_by_year.csv
