@@ -24,3 +24,13 @@
 ![image](https://github.com/karinailkaeva/ilkaeva/blob/main/images/date2.png)
 
 Выбран второй вариант
+
+
+
+## Задание 3.2.1 Разделить данные
+
+Разделенные CSV файлы в файловой системе: 
+
+![image](https://github.com/karinailkaeva/ilkaeva/blob/main/images/splitCSV.PNG)
+
+
