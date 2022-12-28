@@ -1,4 +1,6 @@
 import cProfile
 import vacanciesTable
+import statisticsReport
+import multiprocStatistic
 
-cProfile.run('vacanciesTable.main()')
+cProfile.run('multiprocStatistic.get_multiproc()')
