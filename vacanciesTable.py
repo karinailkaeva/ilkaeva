@@ -186,9 +186,16 @@ class InputConect:
         """
         Возращает границы для печати таблицы.
         :param dictionary: Список, к которому будут применяться границы (list)
-        :param borders: Список из двух границ (list)
+        :param borders: Строка из двух границ (str)
         :return:
             int: левая граница вывода таблицы, права граница вывода таблицы
+            
+        >>> InputConect.get_borders_table([1, 2, 3, 4, 5, 6], '')
+        (0, 6)
+        >>> InputConect.get_borders_table([1, 2, 3, 4, 5, 6], '2 4')
+        (1, 3)
+        >>> InputConect.get_borders_table([1, 2, 3, 4, 5, 6], '5')
+        (4, 6)
         """
         step = borders.split()
         step_start = int(step[0]) - 1 if len(step) > 0 else 0
