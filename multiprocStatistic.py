@@ -1,16 +1,21 @@
 import multiprocessing
 import statisticsReport
+from pathlib import Path
+import time
 
 vacancy_name = input('Введите название профессии: ')
 
 class PrintingStatistic:
-
-    def __init__(self, file_name):
-        self.file_name = file_name
     """
        Обрабатывает параметры вводимые пользователями: название файла, название профессии;
        печатает статистику на экран
     """
+    def __init__(self, file_name):
+        """
+        Инициализирует класс PrintingStatistic.
+        :param file_name: string: Имя обрабатываемого файла
+        """
+        self.file_name = file_name
 
     def print_data(self):
         """Печатает статистику на экран, создает таблицы, графики и отчет с данными."""
@@ -59,11 +64,6 @@ class PrintingStatistic:
         return [years_salary_dictionary, years_count_dictionary, years_salary_vacancy_dict, years_count_vacancy_dict]
 
 
-        # print(f'Динамика уровня зарплат по годам: {years_salary_dictionary}')
-        # print(f'Динамика количества вакансий по годам: {years_count_dictionary}')
-        # print(f'Динамика уровня зарплат по годам для выбранной профессии: {years_salary_vacancy_dict}')
-        # print(f'Динамика количества вакансий по годам для выбранной профессии: {years_count_vacancy_dict}')
-
 def main(file_name):
     """
     Создает объект InputConect, печатает данные и создает таблицы, графики и отчеты
@@ -72,11 +72,11 @@ def main(file_name):
     return PrintingStatistic(file_name).print_data()
 
 def get_multiproc():
-    loc = r'C:\Users\elena\PycharmProjects\LatyntsevaElena\CSV_files_years'
-    fname = [loc + r'\2007.csv', loc + r'\2008.csv', loc + r'\2009.csv', loc + r'\2010.csv',
-             loc + r'\2011.csv', loc + r'\2012.csv', loc + r'\2013.csv', loc + r'\2014.csv',
-             loc + r'\2015.csv', loc + r'\2016.csv', loc + r'\2017.csv', loc + r'\2018.csv',
-             loc + r'\2019.csv', loc + r'\2020.csv', loc + r'\2021.csv', loc + r'\2022.csv']
+    """
+    Запускает многопроцессорность выполнения обработки CSV-файлов;
+    печатает статистику.
+    """
+    fname = [f for f in Path(input('Введите название папки: ')).glob('*.csv')]
 
     with multiprocessing.Pool(processes=16) as p:
         result = p.map(main, fname)
@@ -95,5 +95,9 @@ def get_multiproc():
     print(f'Динамика уровня зарплат по годам для выбранной профессии: {years_salary_vacancy_dict}')
     print(f'Динамика количества вакансий по годам для выбранной профессии: {years_count_vacancy_dict}')
 
-# if __name__ == '__main__':
+
+if __name__ == '__main__':
+    start_time = time.time()
+    get_multiproc()
+    print("--- %s seconds ---" % (time.time() - start_time))
 
