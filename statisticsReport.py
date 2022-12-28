@@ -1,5 +1,4 @@
 import csv
-from datetime import datetime
 from openpyxl import Workbook
 from openpyxl.styles import Font, Border, Side
 import matplotlib.pyplot as plt
@@ -121,7 +120,7 @@ class InputConect:
             # report_excel = Report('Статистика по годам', 'Статистика по городам', '000000', 'thin', True)
             # report_excel.generate_excel(vacancy_name)
             # Report.generate_image(vacancy_name)
-            Report.generate_pdf(vacancy_name)
+            # Report.generate_pdf(vacancy_name)
 
 
     @staticmethod
@@ -165,7 +164,7 @@ class InputConect:
         vacancies_dict = vacancies_objects
         years = set()
         for vacancy in vacancies_dict:
-            years.add(int(datetime.strptime(vacancy.published_at, '%Y-%m-%dT%H:%M:%S%z').strftime("%Y")))
+            years.add(int(vacancy.published_at[:4]))
         years = list(range(min(years), max(years) + 1))
 
         years_salary_dictionary = {year: [] for year in years}
@@ -176,7 +175,7 @@ class InputConect:
         area_dict = {}
 
         for vacancy in vacancies_dict:
-            year = int(datetime.strptime(vacancy.published_at, '%Y-%m-%dT%H:%M:%S%z').strftime("%Y"))
+            year = int(vacancy.published_at[:4])
             years_salary_dictionary[year].append(vacancy.salary.get_salary_in_rub())
             years_count_dictionary[year] += 1
             if vacancy_name in vacancy.name:
@@ -539,5 +538,5 @@ def main():
     a = InputConect()
     a.print_data()
 
-if __name__ == '__main__':
-    main()
+# if __name__ == '__main__':
+#     main()
