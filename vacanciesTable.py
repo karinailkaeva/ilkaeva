@@ -264,6 +264,28 @@ class InputConect:
 
         print(table_vacancies.get_string(start=border[0], end=border[1], fields=columns))
 
+    # @staticmethod
+    # def formatter_date(date, form_date, result_form):
+    #     return datetime.strptime(date, form_date).strftime(result_form)
+
+    @staticmethod
+    def formatter_date_1(input_date, result_form):
+        i = 0
+        date = ''
+        for char in input_date:
+            date += str(char)
+            i += 1
+            if i == 10:
+                break
+        if result_form == '%Y-%m-%d':
+            list_date = date.split('.')
+            return f'{list_date[2]}-{list_date[1]}-{list_date[0]}'
+        else:
+            list_date = date.split('-')
+            return f'{list_date[2]}.{list_date[1]}.{list_date[0]}'
+
+
+
     @staticmethod
     def formatter(input_dictionary):
         """
@@ -280,8 +302,9 @@ class InputConect:
                 if type(getattr(row, field)).__name__ == 'list':
                     new_row[dictionary_keys[field]] = '\n'.join(getattr(row, field))
                 elif field == 'published_at':
-                    new_row[dictionary_keys[field]] = datetime.strptime(getattr(row, field),
-                                                                        '%Y-%m-%dT%H:%M:%S%z').strftime("%d.%m.%Y")
+                    # new_row[dictionary_keys[field]] = InputConect.formatter_date(getattr(row, field),
+                    #                                                              '%Y-%m-%dT%H:%M:%S%z', "%d.%m.%Y")
+                    new_row[dictionary_keys[field]] = InputConect.formatter_date_1(getattr(row, field), "%d.%m.%Y")
                 elif field[:6] == 'salary':
                     salary_from = int(float(getattr(row, 'salary').salary_from))
                     salary_to = int(float(getattr(row, 'salary').salary_to))
@@ -341,7 +364,8 @@ class InputConect:
             return list(filter(lambda row: int(float(getattr(row, field).salary_from)) <=
                                            value_field <= int(float(getattr(row, field).salary_to)), vacancies_data))
         if field == 'published_at':
-            value_field = datetime.strptime(value_field, '%d.%m.%Y').strftime('%Y-%m-%d')
+            # value_field = InputConect.formatter_date(value_field, '%d.%m.%Y', '%Y-%m-%d')
+            value_field = InputConect.formatter_date_1(value_field, '%Y-%m-%d')
             return list(filter(lambda row: getattr(row, field).find(value_field) != -1, vacancies_data))
         if field == 'experience_id':
             value_field = InputConect.get_key(dictionary_experience_id, value_field)
@@ -454,6 +478,6 @@ def main():
     a = InputConect()
     a.print_data()
 
-if __name__ == '__main__':
-    import doctest
-    doctest.testmod()
+# if __name__ == '__main__':
+#     import doctest
+#     doctest.testmod()
