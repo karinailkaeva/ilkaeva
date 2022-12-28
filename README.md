@@ -31,6 +31,17 @@
 
 Разделенные CSV файлы в файловой системе: 
 
-![image](https://github.com/karinailkaeva/ilkaeva/blob/main/images/splitCSV.PNG)
+![image](https://github.com/karinailkaeva/ilkaeva/blob/main/images/splitCSV.PNG)  
+
+
+## Задание 3.2.2 Многопроцессорная обработка
+
+Время выполнения программы без многопроцессорной обработки:
+
+![image](https://github.com/karinailkaeva/ilkaeva/blob/main/images/single.PNG)
+
+Время выполнения программы с многопроцессорной обработкой:
+
+![image](https://github.com/karinailkaeva/ilkaeva/blob/main/images/multi.PNG)
 
 
