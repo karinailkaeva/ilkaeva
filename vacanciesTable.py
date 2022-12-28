@@ -398,6 +398,11 @@ class DataSet:
         :param value: Строка (str)
         :return:
             str: Строка, отчищенная от тегов
+
+        >>> DataSet.delete_tags('No tags')
+        'No tags'
+        >>> DataSet.delete_tags('With<strong> tags')
+        'With tags'
         """
         temp_value = ''
         while value.find('<') != - 1:
