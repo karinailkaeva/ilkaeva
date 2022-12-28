@@ -78,7 +78,7 @@ def get_multiproc():
     """
     fname = [f for f in Path(input('Введите название папки: ')).glob('*.csv')]
 
-    with multiprocessing.Pool(processes=16) as p:
+    with multiprocessing.Pool(processes=8) as p:
         result = p.map(main, fname)
     years_salary_dictionary = {}
     years_count_dictionary = {}
