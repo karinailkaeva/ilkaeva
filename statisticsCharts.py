@@ -52,7 +52,24 @@ list_analytical_dict_city = []
 list_analytical_dict_city_1 = []
 
 class Vacancy:
+    """
+       Класс для представления вакансии.
+       Attributes:
+           name (str): Название вакансии
+           salary (int): Средняя зарплата
+           area_name (str): Название региона
+           published_at (str): Дата публикации вакансии
+       """
     def __init__(self, name, salary, area_name, published_at):
+        """
+        Инициализирует объект Vacancy.
+
+        Args:
+            name (str): Название вакансии
+            salary (str or int or float): Средняя зарплата
+            area_name (str): Название региона
+            published_at (str): Дата публикации вакансии
+        """
         self.name = name
         self.salary = salary
         self.area_name = area_name
@@ -60,28 +77,59 @@ class Vacancy:
 
 
 class Salary:
+    """
+    Класс для представления зарплаты.
+    Attributes:
+        salary_from (int): Нижняя граница вилки оклада
+        salary_to (int): Верхняя граница вилки оклада
+        salary_currency (str): Идентификатор валюты оклада
+    """
     def __init__(self, salary_from, salary_to, salary_currency):
+        """
+        Инициализирует объект Salary.
+        Args:
+            salary_from (str or int or float): Нижняя граница вилки оклада
+            salary_to (str or int or float): Верхняя граница вилки оклада
+            salary_currency (str): Идентификатор валюты оклада
+        """
         self.salary_from = salary_from
         self.salary_to = salary_to
         self.salary_currency = salary_currency
 
     def get_salary_in_rub(self):
+        """
+        Вычисляет среднюю зарплату из вилки и переводит в рубли при помощи словаря - currency_to_rub.
+        :return:
+            float: Средняя зарплата в рублях
+        """
         return (float(self.salary_from) + float(self.salary_to)) / 2 * currency_to_rub[self.salary_currency]
 
 class InputConect:
+    """
+    Обрабатывает параметры вводимые пользователями: название файла, название профессии;
+    печатает статистику на экран;
+    создает графики с данными.
+    """
     def print_data(self):
+        """Печатает статистику на экран, создает таблицы, графики и отчет с данными."""
         input_params = InputConect.input_params()
         if input_params is not None:
             file_name, vacancy_name = input_params
             vacancies_objects = DataSet(file_name).vacancies_objects
             InputConect.print_analytical_data(vacancies_objects, vacancy_name)
-            #report_excel = Report('Статистика по годам', 'Статистика по городам', '000000', 'thin', True)
-            #report_excel.generate_excel(vacancy_name)
+            # report_excel = Report('Статистика по годам', 'Статистика по городам', '000000', 'thin', True)
+            # report_excel.generate_excel(vacancy_name)
             Report.generate_image(vacancy_name)
 
 
     @staticmethod
     def input_params():
+        """
+        Получает имя CSV файла и название вакансии, введенные пользователем.
+        :return:
+            str: Имя CSV файла
+            str: Название вакансии
+        """
         file_name = input('Введите название файла: ')
         vacancy_name = input('Введите название профессии: ')
 
@@ -89,6 +137,12 @@ class InputConect:
 
     @staticmethod
     def get_years_salary_dict(dictionary):
+        """
+        Преобразует словарь: ключ - год, а значение - среднее значение списка с зарплатами.
+        :param dictionary: Словарь: ключ - год, значение - список со средними зарплатами (dict)
+        :return:
+            dict: Словарь - средняя зарплата за год: ключ - год, значение - средняя зарплата
+        """
         for key, value in dictionary.items():
             if len(value) == 0:
                 dictionary[key] = 0
@@ -98,6 +152,14 @@ class InputConect:
 
     @staticmethod
     def print_analytical_data(vacancies_objects, vacancy_name):
+        """
+        Печатает статистику зарплаты и количества вакансий по годам и городам;
+        добавляет словари со статистикой в списки:
+        list_analytical_dict_year, list_analytical_dict_city, list_analytical_dict_city_1
+        для создания таблиц, графиков и отчета.
+        :param vacancies_objects: Список с вакансиями, на основе которого создается статистика (list)
+        :param vacancy_name: Название вакансии, по которой будет выбираться статистика (str)
+        """
         vacancies_dict = vacancies_objects
         years = set()
         for vacancy in vacancies_dict:
@@ -154,12 +216,30 @@ class InputConect:
 
 
 class DataSet:
+    """
+    Класс для получения данных из файла CSV.
+    Attributes:
+        file_name (str): Название CSV файла
+        vacancies_objects (list): Лист с вакансиями
+    """
     def __init__(self, file_name):
+        """
+        Инициализирует объект DataSet, получает vacancies_objects с помощью метода чтения CSV файла - csv_reader.
+        Args:
+            file_name (str): Название CSV файла
+            vacancies_objects (list): Лист с вакансиями
+        """
         self.file_name = file_name
         self.vacancies_objects = DataSet.csv_reader(file_name)
 
     @staticmethod
     def delete_tags(value):
+        """
+        Отчищает строку от тегов.
+        :param value: Строка (str)
+        :return:
+            str: Строка, отчищенная от тегов
+        """
         temp_value = ''
         while value.find('<') != - 1:
             temp_value += value[:value.find('<')]
@@ -170,6 +250,12 @@ class DataSet:
 
     @staticmethod
     def csv_reader(file_name):
+        """
+        Читает CSV файл и создает vacancy_dictionary (лист с вакансиями) с объектами Vacancy.
+        :param file_name: Имя файла CSV, из которого будут читаться данные (str)
+        :return:
+            list: Лист с вакансиями
+        """
         with open(file_name, newline='', encoding='utf-8-sig') as file:
             vacancies_csv = csv.reader(file)
             vacancy_data = [row for row in vacancies_csv]
@@ -201,7 +287,25 @@ class DataSet:
 
 
 class Report:
+    """
+    Класс для создания таблиц, графиков и отчета по статистике средней зарплаты и количества вакансий.
+    Attributes:
+        sheet_title_year (str): Название листа с таблицей статистики по годам
+        sheet_title_city (str): Название листа с таблицей статистики по городам
+        color_border (str): Цвет обводки ячеек таблицы
+        style_border (str): Толщина обводки ячеек таблицы
+        bold_text (bool): Жирность текста (да/нет)
+    """
     def __init__(self, sheet_title_year, sheet_title_city, color_border, style_border, bold_text):
+        """
+        Инициализирует объект Report.
+        Args:
+            sheet_title_year (str): Название листа с таблицей статистики по годам
+            sheet_title_city (str): Название листа с таблицей статистики по городам
+            color_border (str): Цвет обводки ячеек таблицы
+            style_border (str): Толщина обводки ячеек таблицы
+            bold_text (bool): Жирность текста (да/нет)
+        """
         self.sheet_title_year = sheet_title_year
         self.sheet_title_city = sheet_title_city
         self.color_border = color_border
@@ -210,6 +314,13 @@ class Report:
 
     @staticmethod
     def generate_pie_chart(dictionary, title, ax):
+        """
+        Создает круговую диаграмму ax по данным из словаря dictionary с названием title.
+        :param dictionary: Словарь с данными для создания графика (list)
+        :param title: Название графика (str)
+        :param ax: График
+        :return:
+        """
         labels = ['Другие']
         for city in dictionary.keys():
             labels.append(city)
@@ -226,6 +337,13 @@ class Report:
 
     @staticmethod
     def generate_horizontal_bar_chart(dictionary, title, ax):
+        """
+        Создает горизонтальную столбчатую диаграмму ax по данным из словаря dictionary с названием title.
+        :param dictionary: Словарь с данными для создания графика (list)
+        :param title: Название графика (str)
+        :param ax: График
+        :return:
+        """
         plt.rcdefaults()
 
         cities = []
@@ -251,6 +369,16 @@ class Report:
 
     @staticmethod
     def generate_group_bar_chart(first_dict, second_dict, first_label, second_label, title, vacancy_name, ax):
+        """
+        Создает вертикальную столбчатую диаграмму ax на основе двух словарей с данными, у которых одинаковые ключи.
+        :param first_dict: Первый словарь с данными (dict)
+        :param second_dict: Второй словарь с данными (dict)
+        :param first_label: Название для первого словаря (str)
+        :param second_label: Название для второго словаря (str)
+        :param title: Название для графика (str)
+        :param vacancy_name: Вакансия, статистика по которой собрана во втором словаре (str)
+        :param ax: График
+        """
         labels = first_dict.keys()
         allVacancy = first_dict.values()
         oneVacancy = second_dict.values()
@@ -272,6 +400,10 @@ class Report:
 
     @staticmethod
     def generate_image(vacancy_name):
+        """
+        Создает изображение (graph.png) с графиками по статистике зарплат и количества вакансий по годам и городам.
+        :param vacancy_name: Вакансия, по которой собирается статистика (str)
+        """
         fig, ax = plt.subplots(2, 2)
         Report.generate_group_bar_chart(list_analytical_dict_year[0], list_analytical_dict_year[1], 'средняя з/п',
                                         'з/п', 'Уровень зарплат по годам', vacancy_name, ax[0][0])
@@ -288,6 +420,13 @@ class Report:
 
     @staticmethod
     def append_values(list_dict, work_sheet, style_border, num_column=1):
+        """
+        Добавляет значения из словарей в таблицу по колонкам.
+        :param list_dict: Лист со словарями, из которых берутся данные для таблицы (list)
+        :param work_sheet: Лист XLSX файла, в котором происходит работа с таблицами
+        :param style_border: Толщина границ ячеек таблицы
+        :param num_column: Номер колонки, с которой начинается заполнение таблицы
+        """
         for i, elem in enumerate(list_dict[0].keys()):
             work_sheet.cell(row=i + 2, column=num_column).value = elem
             work_sheet.cell(row=i + 2, column=num_column).border = style_border
@@ -302,6 +441,11 @@ class Report:
 
     @staticmethod
     def get_width_column(sheet, font_size=11):
+        """
+        Задает ширину каждому столбцу в таблице.
+        :param sheet: Лист XLSX файла, в котором происходит работа с таблицами
+        :param font_size: Шрифт текста в таблицах (int)
+        """
         cols_dict = {}
         for row in sheet.rows:
             for cell in row:
@@ -317,6 +461,11 @@ class Report:
                         sheet.column_dimensions[cell.column_letter].width = new_width_col
 
     def generate_excel(self, vacancy_name):
+        """
+        Создает XLSX файл (report.xlsx) с таблицами по статистике
+        (на первом листе - статистика по годам, на втором - статистика по городам).
+        :param vacancy_name: Вакансия, по которой собирается статистика (str)
+        """
         field_statistic_year = ['Год', 'Средняя зарплата', f'Средняя зарплата - {vacancy_name}',
                                 'Количество вакансий', f'Количество вакансий - {vacancy_name}']
         field_statistic_city = ['Город', 'Уровень зарплат', 'Город', 'Доля вакансий']
@@ -344,6 +493,10 @@ class Report:
         work_book.save('report.xlsx')
 
 def main():
+    """
+    Создает объект InputConect, печатает данные и создает графики
+    по статистике средней зарплаты и количества вакансий.
+    """
     a = InputConect()
     a.print_data()
 
