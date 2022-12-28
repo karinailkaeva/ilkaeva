@@ -453,3 +453,7 @@ def main():
     """Создает объект InputConect, печатает данные в таблицу."""
     a = InputConect()
     a.print_data()
+
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
