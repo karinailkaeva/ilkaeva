@@ -51,3 +51,8 @@
 
 ![image](https://github.com/karinailkaeva/ilkaeva/blob/main/images/val.PNG)
 
+Новые разделенные CSV-файлы:
+
+
+![image](https://github.com/karinailkaeva/ilkaeva/blob/main/images/new_csv.PNG)
+
