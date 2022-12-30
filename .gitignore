@@ -3,3 +3,9 @@ venv/
 .idea/
 
 vacancies.csv
+
+vacancies_dif_currencies.csv
+
+currencyRate.csv
+
+CSV_files_years_new/
