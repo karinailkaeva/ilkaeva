@@ -31,8 +31,7 @@ class SplitingCSV:
                 print('Пустой файл')
                 exit()
             index_date = vacancy_keys.index('published_at')
-            filtered_vacancy_data = [vacancy for vacancy in vacancy_data
-                                    if len(vacancy) == len(vacancy_keys) and '' not in vacancy]
+            filtered_vacancy_data = [vacancy for vacancy in vacancy_data]
             for vacancy in filtered_vacancy_data:
                 year = datetime.strptime(vacancy[index_date], '%Y-%m-%dT%H:%M:%S%z').strftime('%Y')
                 if year not in years_list:
