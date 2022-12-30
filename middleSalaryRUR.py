@@ -44,7 +44,6 @@ def formatter(file, curr_dict_date):
     with open(f"{row.published_at[:4]}.csv", mode="a", encoding='utf-8-sig') as w_file:
         file_writer = csv.writer(w_file, delimiter=',', lineterminator="\r")
         file_writer.writerow(row.__dict__)
-    n = 0
     for row in vacancy_dict:
         date = getattr(row, 'published_at')[:7]
         salary_from = float(getattr(row, 'salary').salary_from) if getattr(row, 'salary').salary_from != '' else 0
