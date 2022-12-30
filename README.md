@@ -45,3 +45,9 @@
 ![image](https://github.com/karinailkaeva/ilkaeva/blob/main/images/multi.PNG)
 
 
+## Задание 3.3.1 Курсы валют
+
+Частотность, с которой встречаются различные валюты:
+
+![image](https://github.com/karinailkaeva/ilkaeva/blob/main/images/val.PNG)
+
